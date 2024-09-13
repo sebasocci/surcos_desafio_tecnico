@@ -29,18 +29,19 @@ $ npm install
 
 Para ejecutar la aplicación localmente, usa uno de los siguientes comandos:
 
+  - Este comando ejecuta la aplicación en modo desarrollo (http://localhost:3001/api/docs)
 ```bash
-# Este comando ejecuta la aplicación en modo desarrollo (http://localhost:3001/api/docs)
 $ npm run start
-
-# Este comando ejecuta la aplicación en modo desarrollo con recarga automática en cambios.
+```
+  - Este comando ejecuta la aplicación en modo desarrollo con recarga automática en cambios.
+```bash
 $ npm run start:dev
 ```
 
 ## Ejecución de Pruebas Unitarias
 
+  - Para ejecutar las pruebas unitarias, usa:
 ```bash
-# Para ejecutar las pruebas unitarias, usa:
 $ npm run test
 ```
 
@@ -50,8 +51,8 @@ Asegúrate de que Docker y Docker Compose estén Instalados
 
 Debes tener Docker y Docker Compose instalados en tu máquina. Puedes descargar Docker Desktop, que incluye Docker Compose, desde el sitio web de Docker.
 
+  - # Construir y Ejecutar la Aplicación con Docker Compose:
 ```bash
-# Construir y Ejecutar la Aplicación con Docker Compose:
 $ docker-compose up --build
 ```
 
@@ -61,13 +62,13 @@ Esto levantará el servicio en la ruta: http://localhost:3001/api/docs
 
 La estructura del proyecto está organizada en módulos para seguir una arquitectura limpia y modular. Los componentes principales son:
 
-src/app.module.ts: Configura el módulo raíz de la aplicación.
-src/auth/: Contiene la lógica de autenticación, incluyendo JWT.
-src/usuarios/: Maneja las operaciones relacionadas con los usuarios.
-src/tarea/: Maneja las operaciones relacionadas con las tareas.
-src/redis/: Maneja la implementación de caché con redis.
-src/utilidades/: Contiene herramientas y excepciones comunes.
-src/config/: Configuraciones del proyecto (por ejemplo, conexión a la base de datos).
+  - src/app.module.ts: Configura el módulo raíz de la aplicación.
+  - src/auth/: Contiene la lógica de autenticación, incluyendo JWT.
+  - src/usuarios/: Maneja las operaciones relacionadas con los usuarios.
+  - src/tarea/: Maneja las operaciones relacionadas con las tareas.
+  - src/redis/: Maneja la implementación de caché con redis.
+  - src/utilidades/: Contiene herramientas y excepciones comunes.
+  - src/config/: Configuraciones del proyecto (por ejemplo, conexión a la base de datos).
 
 ## Decisiones de Diseño
 
