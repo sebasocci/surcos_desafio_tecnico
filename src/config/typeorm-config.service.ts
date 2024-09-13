@@ -10,8 +10,7 @@ export class TypeOrmConfigService {
 
   createTypeOrmConfig(): TypeOrmModuleOptions {
     return {
-      type: 'postgres',
-      //url: this.configService.get<string>('DATABASE_URL'),
+      type: 'postgres',      
       url: databaseUrl,
       synchronize: true, // Solo para desarrollo
       autoLoadEntities: true,

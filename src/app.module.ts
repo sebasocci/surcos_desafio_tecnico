@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { TareaModule } from './tarea/tarea.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -21,10 +22,11 @@ import { TareaModule } from './tarea/tarea.module';
         ssl: true
       }),
       inject: [ConfigService],
-    }),    
+    }),       
     AuthModule,
     UsuarioModule,
     TareaModule,
+    RedisModule.register(), // Llama al método estático para registrar Redis
   ],
   controllers: [],
   providers: [],

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Usuario } from '../usuario/usuario.entity';
 
 @Entity('task')
 export class Tarea {
@@ -15,5 +16,9 @@ export class Tarea {
   fechaLimite: Date;
 
   @Column({ type: 'boolean', default: false })  
-  completada: boolean;
+  completada: boolean;  
+
+  // Relación ManyToOne con Usuario
+  @ManyToOne(() => Usuario, (usuario) => usuario.tareas, { onDelete: 'CASCADE' })
+  usuario: Usuario;
 }

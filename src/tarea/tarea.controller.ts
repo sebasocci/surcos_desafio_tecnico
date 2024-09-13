@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, Request, UseGuards, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
 import { TareaService } from './tarea.service';
 import { CreateTareaDto } from './dto/create-tarea.dto';
 import { UpdateTareaDto } from './dto/update-tarea.dto';
 import { Tarea } from './tarea.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiExcludeEndpoint, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Tareas')
 @Controller('tarea')
@@ -17,8 +17,28 @@ export class TareaController {
   @ApiOperation({ summary: 'Obtener todas las tareas' })
   @ApiResponse({ status: 200, description: 'Lista de tareas obtenida exitosamente', type: [Tarea] })
   @ApiResponse({ status: 401, description: 'No autorizado' })
-  findAll(): Promise<Tarea[]> {
-    return this.tareaService.findAll();
+  @ApiQuery({
+    name: 'page',
+    description: 'Página actual',
+    required: false, 
+    type: Number,
+    example: 1, 
+  })
+  @ApiQuery({
+    name: 'pagesize',
+    description: 'Cantidad de elementos por página',
+    required: false, 
+    type: Number,
+    example: 10, 
+  })
+  async findAll(
+    @Request() req,
+    @Query('page') page: number = 1, // Página actual, por defecto la página 1
+    @Query('pagesize') pagesize: number = 10, // Cantidad de elementos por página, por defecto 10    
+  ): Promise<{ data: Tarea[]; total: number; page: number; pagesize: number }> {
+    const usuarioId = req.user.userId; // Extraer el usuario autenticado del JWT
+    pagesize = pagesize > 100 ? 100 : pagesize; // Limitar a un máximo de 100 elementos por página
+    return this.tareaService.findAll(usuarioId, { page, pagesize });
   }
 
   @Get(':id')
@@ -41,8 +61,9 @@ export class TareaController {
   @ApiResponse({ status: 201, description: 'Tarea creada exitosamente', type: Tarea })
   @ApiResponse({ status: 400, description: 'Solicitud incorrecta' })
   @ApiResponse({ status: 401, description: 'No autorizado' })
-  create(@Body() createTareaDto: CreateTareaDto): Promise<Tarea> {
-    return this.tareaService.create(createTareaDto);
+  async create(@Body() createTareaDto: CreateTareaDto, @Request() req): Promise<Tarea> {    
+    const usuarioId = req.user.userId; // Extraer el usuario autenticado del JWT
+    return this.tareaService.create(createTareaDto, usuarioId);
   }
 
   @Put(':id/actualizar')
