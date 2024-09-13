@@ -16,10 +16,13 @@ import { RedisModule } from './redis/redis.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
-        url: configService.get('DATABASE_URL'),
+        url: configService.get('DATABASE_URL'),        
         autoLoadEntities: true,
         synchronize: true,
-        ssl: true
+        //ssl: true
+        ssl: {
+          rejectUnauthorized: false, // Maneja certificados autofirmados
+        },
       }),
       inject: [ConfigService],
     }),       
