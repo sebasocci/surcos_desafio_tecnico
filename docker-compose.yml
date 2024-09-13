@@ -3,7 +3,7 @@ version: '3.1'
 services:
   app:
     build: .
-    container_name: todoList_app
+    container_name: todolist_app
     ports:
       - "3001:3001"
     environment:

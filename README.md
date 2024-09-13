@@ -85,6 +85,8 @@ La estructura del proyecto está organizada en módulos para seguir una arquitec
 
 - **CRUD de Tareas**: La API permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre las tareas, asegurando que los usuarios puedan gestionar sus tareas de manera efectiva.
 
+## Proyecto desplegado en aws: http://18.216.124.223:3001/api/docs
+
 ## Contacto
 
 - Author - Sebastián Socci
