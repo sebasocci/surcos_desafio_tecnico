@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  app:
+    build: .
+    container_name: nestjs_app
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://admin:g7I3CkCcP7XShpkgHPuAkm2eymrATscB@dpg-cq0urnuehbks73ei1g2g-a.ohio-postgres.render.com:5432/stockcity
+    #depends_on:
+    #  - db
+
+  #db:
+  #  image: postgres:13
+  #  environment:
+  #    POSTGRES_USER: admin
+  #    POSTGRES_PASSWORD: Toxicity10
+  #    POSTGRES_DB: stockcity
+  #  ports:
+  #    - "5432:5432"
+  #  volumes:
+  #    - ./postgres-data:/var/lib/postgresql/data
