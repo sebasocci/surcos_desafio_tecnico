@@ -34,8 +34,19 @@ export class RedisModule {
       };
     }
 
+    // Proporcionar un cliente Redis nulo o mockeado si USE_REDIS es 'false'
     return {
       module: RedisModule,
+      providers: [
+        {
+          provide: 'REDIS_CLIENT',
+          useValue: {
+            get: async () => null,
+            set: async () => {},            
+          },
+        },
+      ],
+      exports: ['REDIS_CLIENT'],
     };
   }
 }
