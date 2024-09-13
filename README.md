@@ -45,18 +45,20 @@ $ npm run start:dev
 $ npm run test
 ```
 
-## Uso de Docker con Docker Compose
+## Uso de Docker con Docker Compose y Redis
 
-Asegúrate de que Docker y Docker Compose estén Instalados
-
-Debes tener Docker y Docker Compose instalados en tu máquina. Puedes descargar Docker Desktop, que incluye Docker Compose, desde el sitio web de Docker.
+Para utilizarlo debes tener Docker y Docker Compose instalados en tu máquina.
 
   - # Construir y Ejecutar la Aplicación con Docker Compose:
 ```bash
 $ docker-compose up --build
 ```
 
-Esto levantará el servicio en la ruta: http://localhost:3001/api/docs
+Este comando compila la aplicacion en un contenedor y a su vez crea una imagen de Redis.
+Esta imagen se utiliza para la implementación del uso de caché.
+(El uso de Redis puede configurarse en la variable de entorno)
+
+El servicio completo se despliega en la ruta: http://localhost:3001/api/docs
 
 ## Estructura del Proyecto
 
