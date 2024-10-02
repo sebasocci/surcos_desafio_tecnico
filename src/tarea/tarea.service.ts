@@ -6,6 +6,9 @@ import { Usuario } from '../usuario/usuario.entity';
 import { CreateTareaDto } from './dto/create-tarea.dto';
 import { UpdateTareaDto } from './dto/update-tarea.dto';
 import { RedisClientType } from 'redis';
+import { ConfigService } from '@nestjs/config';
+
+const configService = new ConfigService();
 
 @Injectable()
 export class TareaService {
@@ -13,7 +16,7 @@ export class TareaService {
     @InjectRepository(Tarea)
     private readonly tareaRepository: Repository<Tarea>,
     @Inject('REDIS_CLIENT')
-    private readonly redisClient: RedisClientType,
+    private readonly redisClient: RedisClientType    
   ) {}
 
   async findAll( usuarioId: number, paginationQuery: { page: number; pagesize: number }): Promise<{ data: Tarea[]; total: number; page: number; pagesize: number }> {
@@ -23,7 +26,7 @@ export class TareaService {
     try {
       // Intentar obtener datos del caché      
       const cachedData = await this.redisClient.get(cacheKey);
-      if (cachedData) {
+      if (cachedData && configService.get('USE_REDIS') === 'true') {
         console.log('Se obtuvieron datos desde cache redis');
         return JSON.parse(cachedData);
       }
@@ -44,10 +47,12 @@ export class TareaService {
       };
 
       // Almacena los datos en caché
-      console.log('Almaceno datos en cache:', result);
-      await this.redisClient.set(cacheKey, JSON.stringify(result), {
-        EX: 3600, // TTL en segundos (ej. 3600 segundos = 1 hora)
-      });
+      if (configService.get('USE_REDIS') === 'true') {
+        console.log('Almaceno datos en cache:', result);
+        await this.redisClient.set(cacheKey, JSON.stringify(result), {
+          EX: 3600, // TTL en segundos (ej. 3600 segundos = 1 hora)
+        });
+      }
 
       return result;       
 

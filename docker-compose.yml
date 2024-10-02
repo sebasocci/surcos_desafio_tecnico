@@ -7,7 +7,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - DATABASE_URL=postgresql://postgres:ox46o2vi9mG7XrX4RRD5OZlFmAR1qxuz@database-1.cpa0oeeqeb6z.us-east-1.rds.amazonaws.com:5432/postgres
+      - DATABASE_URL=postgresql://admin:gdA9UopQABcBD3MdstAZLodXcWgTf2XI@dpg-cru0clhu0jms73c01860-a.ohio-postgres.render.com/stockcity_sedi
       - USE_REDIS=true
       - REDIS_URL=redis://redis-server:6379
     depends_on:
